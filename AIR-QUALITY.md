@@ -1,5 +1,32 @@
 # Notes about the Air Quality Monitor Furball
 
+## Hardware
+
+The monitor uses an Wemos LOLIN32 ESP32 breakout board. The software will work with other ESP32 boards but the printed circuit board will only work with the LOLIN32 and compatible breakout boards. When I first started making these boards the LOLIN32 was common and easily available; unfortunately that's no longer true.
+
+It uses a Plantower PMS5003 particle sensor that can report the density of PM1, PM2.5 and PM10 (1, 2.5 and 10 micron particles) in the air. The Plantower sensor uses a cable that requires a surface mount connector on the printed circuit board.
+
+Optionally it also uses an I2C BME680 atmospheric sensor to report air temperature, pressure, humidity, and volatile organics; a TSL2561 light sensor to report lux, light intensity and infrared, and an SSD1306 128x64 OLED display.
+
+### Pins
+
+#### I2C
+
+These are the default I2C pins on many ESP32 breakout boards.
+
+SDA - GPIO21
+SCL - GPIO22
+
+#### PMS5003 (serial interface)
+
+ESP32 TX - PMS5003 RCV - GPIO16  
+ESP32 RCV - PMS5003 TX - GPIO17 
+
+#### I2C Addresses
+
+BME680 -  0x77 - atmospheric sensor
+TSL2561 - 0x39  - light sensor
+SSD1306 - 0x3c - 128x64 OLED display
 
 ## Wiring the OLED Display
 
@@ -27,6 +54,7 @@ The available screen types are listed in `src/display.h`. They include:
 -  `DISPLAY_SCREEN_MESSAGE` - shows a fixed text message defined by `DISPLAY_SCREEN_MESSAGE_TEXT`
 -  `DISPLAY_SCREEN_TIME` - shows the current time
 -  `DISPLAY_SCREEN_TEMPERATURE` - shows the current temperature in C
+-  `DISPLAY_SCREEN_TEMPERATURE_F` - shows temperature in F 
 -  `DISPLAY_SCREEN_HUMIDITY` - shows the current relative humidity
 -  `DISPLAY_SCREEN_PRESSURE` - shows the current air pressure
 -  `DISPLAY_SCREEN_VOC` - shows the current gas resistance reading from the BME680
@@ -36,6 +64,12 @@ The available screen types are listed in `src/display.h`. They include:
 -  `DISPLAY_SCREEN_LUX` - shows the current light intensity in lux
 -  `DISPLAY_SCREEN_INFRARED` - shows the current infrared light intensity
 -  `DISPLAY_SCREEN_IP` - shows the current IP address
+-  `DISPLAY_SCREEN_ALL_AIR` - shows temperature in C, humidity and pressure on one screen 
+-  `DISPLAY_SCREEN_ALL_AIR_F` - shows temperature in F, humidity and pressure on one screen 
+-  `DISPLAY_SCREEN_ALL_LIGHT` - shows lux and ir on one screen
+-  `DISPLAY_SCREEN_ALL_PARTICLE` - shows PM1, PM2.5 and PM10 concentrations on one screen
+-  `DISPLAY_SCREEN_ALL_OFF` - shows a blank, dark screen
+-  `DISPLAY_SCREEN_ALL_ON` - shows a fully lit screen
 
 For example, if you want to cycle every 10 seconds between a screen that says "Hello World", one that shows the time and one that shows the temperature, you'd use these lines:
 ```
@@ -46,8 +80,14 @@ For example, if you want to cycle every 10 seconds between a screen that says "H
 
 If you want to always show the PM2.5 density and nothing else, you'd use these lines:
 ```
-#define DISPLAY_SCREEN_INTERVAL 0
+#define DISPLAY_SCREEN_INTERVAL 1000
 #define DISPLAY_SCREENS { DISPLAY_SCREEN_PM2_5 }
 #define DISPLAY_SCREEN_MESSAGE_TEXT "this doesn't matter but must still be defined"
 ```
 
+If you want to show a blank screen for 5 seconds and all three particle densities at once for 20 seconds you'd use these lines:
+```
+#define DISPLAY_SCREEN_INTERVAL 5000
+#define DISPLAY_SCREENS { DISPLAY_SCREEN_ALL_OFF,  DISPLAY_SCREEN_ALL_PARTICLE,  DISPLAY_SCREEN_ALL_PARTICLE,  DISPLAY_SCREEN_ALL_PARTICLE,  DISPLAY_SCREEN_ALL_PARTICLE }
+#define DISPLAY_SCREEN_MESSAGE_TEXT "this doesn't matter but must still be defined"
+```

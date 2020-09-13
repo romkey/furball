@@ -60,6 +60,12 @@ static void display_screen_temperature() {
   display.drawStr(10, 40, "degrees C");
 }
 
+static void display_screen_temperature_f() {
+  display.setCursor(10, 20);
+  display.print((int)(bme680.temperature()*9.0/5 + 32));
+  display.drawStr(10, 40, "degrees F");
+}
+
 static void display_screen_humidity() {
   display.setCursor(10, 20);
   display.print(bme680.humidity());
@@ -117,10 +123,65 @@ static void display_screen_ip_address() {
   display.drawStr(10, 20, ip_address_str);
 }
 
+static void display_screen_all_air() {
+  char buf[12];
+
+  snprintf(buf, 12, "C  %d", (int)bme680.temperature());
+  display.drawStr(0, 15, buf);
+  snprintf(buf, 12, "mg %d", (int)bme680.pressure());
+  display.drawStr(0, 40, buf);
+  snprintf(buf, 12, "%%  %d", (int)bme680.humidity());
+  display.drawStr(0, 60, buf);
+}
+
+static void display_screen_all_air_f() {
+  char buf[12];
+
+  snprintf(buf, 12, "C  %d", (int)(bme680.temperature()*9.0/5 + 32));
+  display.drawStr(0, 15, buf);
+  snprintf(buf, 12, "mg %d", (int)bme680.pressure());
+  display.drawStr(0, 40, buf);
+  snprintf(buf, 12, "%%  %d", (int)bme680.humidity());
+  display.drawStr(0, 60, buf);
+}
+
+static void display_screen_all_light() {
+  char buf[12];
+
+  snprintf(buf, 12, "lx  %d", tsl2561.lux());
+  display.drawStr(0, 15, buf);
+  snprintf(buf, 12, "ir %d", tsl2561.ir());
+  display.drawStr(0, 40, buf);
+}
+
+static void display_screen_all_particle() {
+  char buf[12];
+
+  snprintf(buf, 12, "1    %d", pms5003.density_1_0());
+  display.drawStr(0, 15, buf);
+  snprintf(buf, 12, "2.5 %d", pms5003.density_2_5());
+  display.drawStr(0, 40, buf);
+  snprintf(buf, 12, "10  %d", pms5003.density_10_0());
+  display.drawStr(0, 60, buf);
+}
+
+static void display_screen_all_off() {
+  display.setDrawColor(0);
+  display.drawBox(0, 0, 127, 63);
+}
+
+static void display_screen_all_on() {
+  display.setDrawColor(1);
+  display.drawBox(0, 0, 127, 63);
+}
+ 
+// these MUST be in the same sequence as the enum screen_type_t
+// you must not skip any
 static void (*screen_handlers[])() = {
   display_screen_message,
   display_screen_time,
   display_screen_temperature,
+  display_screen_temperature_f,
   display_screen_humidity,
   display_screen_pressure,
   display_screen_voc,
@@ -129,7 +190,13 @@ static void (*screen_handlers[])() = {
   display_screen_pm10,
   display_screen_lux,
   display_screen_infrared,
-  display_screen_ip_address
+  display_screen_ip_address,
+  display_screen_all_air,
+  display_screen_all_air_f,
+  display_screen_all_light,
+  display_screen_all_particle,
+  display_screen_all_off,
+  display_screen_all_on
 };
 
 void display_loop() {
@@ -141,10 +208,11 @@ void display_loop() {
     if(++current_screen_index == sizeof(screen_types)/sizeof(display_screen_t))
       current_screen_index = 0;
   }
-  
 
   display.clearBuffer();
   display.setFont(u8g2_font_ncenB14_tr);
+  display.setFontMode(0); // not transparent
+  display.setDrawColor(1);
 
   (*screen_handlers[screen_types[current_screen_index]])();
   display.sendBuffer();

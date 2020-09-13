@@ -4,9 +4,9 @@
 
 The monitor uses an Wemos LOLIN32 ESP32 breakout board. The software will work with other ESP32 boards but the printed circuit board will only work with the LOLIN32 and compatible breakout boards. When I first started making these boards the LOLIN32 was common and easily available; unfortunately that's no longer true.
 
-It uses a Plantower PMS5003 particle sensor that can report the density of PM1, PM2.5 and PM10 (1, 2.5 and 10 micron particles) in the air. The Plantower sensor uses a cable that requires a surface mount connector on the printed circuit board.
+It uses a [Plantower PMS5003](https://www.aqmd.gov/docs/default-source/aq-spec/resources-page/plantower-pms5003-manual_v2-3.pdf) particle sensor that can report the density of PM1, PM2.5 and PM10 (1, 2.5 and 10 micron particles) in the air. The Plantower sensor uses a cable that requires a surface mount connector on the printed circuit board.
 
-Optionally it also uses an I2C BME680 atmospheric sensor to report air temperature, pressure, humidity, and volatile organics; a TSL2561 light sensor to report lux, light intensity and infrared, and an SSD1306 128x64 OLED display.
+Optionally it also uses an I2C [BME680](https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors-bme680/) atmospheric sensor to report air temperature, pressure, humidity, and volatile organics; a [TSL2561](https://ams.com/tsl2561) light sensor to report lux, light intensity and infrared, and an [SSD1306](http://www.solomon-systech.com/en/product/advanced-display/oled-display-driver-ic/ssd1306/) 128x64 OLED display.
 
 ### Pins
 
@@ -14,19 +14,19 @@ Optionally it also uses an I2C BME680 atmospheric sensor to report air temperatu
 
 These are the default I2C pins on many ESP32 breakout boards.
 
-SDA - GPIO21
-SCL - GPIO22
+- SDA - GPIO21
+- SCL - GPIO22
 
 #### PMS5003 (serial interface)
 
-ESP32 TX - PMS5003 RCV - GPIO16  
-ESP32 RCV - PMS5003 TX - GPIO17 
+- ESP32 TX - PMS5003 RCV - GPIO16  
+- ESP32 RCV - PMS5003 TX - GPIO17 
 
 #### I2C Addresses
 
-BME680 -  0x77 - atmospheric sensor
-TSL2561 - 0x39  - light sensor
-SSD1306 - 0x3c - 128x64 OLED display
+- BME680 -  0x77 - atmospheric sensor
+- TSL2561 - 0x39  - light sensor
+- SSD1306 - 0x3c - 128x64 OLED display
 
 ## Wiring the OLED Display
 
@@ -91,3 +91,5 @@ If you want to show a blank screen for 5 seconds and all three particle densitie
 #define DISPLAY_SCREENS { DISPLAY_SCREEN_ALL_OFF,  DISPLAY_SCREEN_ALL_PARTICLE,  DISPLAY_SCREEN_ALL_PARTICLE,  DISPLAY_SCREEN_ALL_PARTICLE,  DISPLAY_SCREEN_ALL_PARTICLE }
 #define DISPLAY_SCREEN_MESSAGE_TEXT "this doesn't matter but must still be defined"
 ```
+
+Internally the firmware uses the [u8g2 graphics library](https://github.com/olikraus/u8g2) to manage and draw on the OLED display.

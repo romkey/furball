@@ -9,7 +9,7 @@ The original Furball didn't use a display. We'll attach the OLED display to the 
 - SCL to SCL
 - GND to GND
 
-![I2C header wired](docs/img/furballv3.jpg)
+![I2C header wired](docs/img/oled-display-connector.jpg)
 
 ## Configuring Software
 

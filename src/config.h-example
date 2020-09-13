@@ -22,3 +22,8 @@
 
 // define this if you want serial debugging messages
 #define VERBOSE
+
+// set up the display
+#define DISPLAY_SCREEN_INTERVAL 1000 // ms to stay on each screen
+#define DISPLAY_SCREENS { DISPLAY_SCREEN_TIME, DISPLAY_SCREEN_TEMPERATURE, DISPLAY_SCREEN_PM2_5, DISPLAY_SCREEN_IP, DISPLAY_SCREEN_END } // values from display.h
+#define DISPLAY_SCREEN_MESSAGE_TEXT "Hello World"

@@ -1,5 +1,14 @@
 # Notes about the Air Quality Monitor Furball
 
+
+## Wiring the OLED Display
+
+The original Furball didn't use a display. We'll attach the OLED display to the four pin I2C header at the top middle of the board. If you can, solder a 4 pin header strip to the board and use female-to-female jumper wires.
+- 3V to VCC
+- SDA to SDA
+- SCL to SCL
+- GND to GND
+
 ## Configuring Software
 
 1. Copy `src/config.h-example` to `src/config.h`

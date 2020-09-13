@@ -1,6 +1,9 @@
-# The Furball
+# The Furball Air Quality Monitor Variant
+
+_This is the README file for the regular Furball - for info on adapting it to an Air Quality Monitor please see [AIR-QUALITY.md](AIR-QUALITY.md]
 
 [![Build Status](https://travis-ci.com/HomeBusProjects/furball.svg?branch=master)](https://travis-ci.com/HomeBusProjects/furball)
+
 
 Furball is an open-source hardware project intended to help with the research and development of [Homebus](https://github.com/HomeBusProjects), an IoT auto-provisioning framework and data processing network built on top of MQTT. Note that Homebus is not even alpha quality software at this time and is still undergoing architectural changes and development.
 

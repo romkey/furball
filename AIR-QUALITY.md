@@ -34,3 +34,18 @@ The available screen types are listed in `src/display.h`. They include:
 -  `DISPLAY_SCREEN_LUX` - shows the current light intensity in lux
 -  `DISPLAY_SCREEN_INFRARED` - shows the current infrared light intensity
 -  `DISPLAY_SCREEN_IP` - shows the current IP address
+
+For example, if you want to cycle every 10 seconds between a screen that says "Hello World", one that shows the time and one that shows the temperature, you'd use these lines:
+```
+#define DISPLAY_SCREEN_INTERVAL 10000
+#define DISPLAY_SCREENS { DISPLAY_SCREEN_MESSAGE, DISPLAY_SCREEN_TIME, DISPLAY_SCREEN_TEMPERATURE }
+#define DISPLAY_SCREEN_MESSAGE_TEXT "Hello World"
+```
+
+If you want to always show the PM2.5 density and nothing else, you'd use these lines:
+```
+#define DISPLAY_SCREEN_INTERVAL 0
+#define DISPLAY_SCREENS { DISPLAY_SCREEN_PM2_5 }
+#define DISPLAY_SCREEN_MESSAGE_TEXT "this doesn't matter but must still be defined"
+```
+

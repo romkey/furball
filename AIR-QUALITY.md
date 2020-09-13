@@ -3,11 +3,13 @@
 
 ## Wiring the OLED Display
 
-The original Furball didn't use a display. We'll attach the OLED display to the four pin I2C header at the top middle of the board. If you can, solder a 4 pin header strip to the board and use female-to-female jumper wires.
+The original Furball didn't use a display. We'll attach the OLED display to the four pin I2C header at the top middle of the board. If you can, solder a 4 pin header strip to the board and use female-to-female jumper wires. The I2C header wasn't designed specifically for this OLED display, so its pins are in a slightly different order.
 - 3V to VCC
 - SDA to SDA
 - SCL to SCL
 - GND to GND
+
+![I2C header wired](docs/img/furballv3.jpg)
 
 ## Configuring Software
 

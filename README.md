@@ -1,6 +1,6 @@
 # The Furball Air Quality Monitor Variant
 
-_This is the README file for the regular Furball - for info on adapting it to an Air Quality Monitor please see [AIR-QUALITY.md](AIR-QUALITY.md]
+_This is the README file for the regular Furball - for info on adapting it to an Air Quality Monitor please see [AIR-QUALITY.md](AIR-QUALITY.md].
 
 [![Build Status](https://travis-ci.com/HomeBusProjects/furball.svg?branch=master)](https://travis-ci.com/HomeBusProjects/furball)
 

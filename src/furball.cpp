@@ -24,6 +24,7 @@
 #include "sensors/uptime.h"
 
 #include "display.h"
+#include "aqi.h"
 
 Uptime uptime;
 
@@ -115,6 +116,34 @@ static boolean furball_air_quality_update(char* buf, size_t buf_len) {
 
   return true;
 }
+
+static boolean furball_aqi_update(char* buf, size_t buf_len) {
+  if(!pms5003.is_present())
+    return false;
+
+  uint16_t pm25 = pms5003.density_2_5();
+  uint16_t pm10 = pms5003.density_10_0();
+
+  if(pm25 > 10000 && uptime.uptime() < 60*1000)
+    pm25 = 0;
+
+  if(pm10 > 10000 && uptime.uptime() < 60*1000)
+    pm10 = 0;
+
+  unsigned aqi_value = aqi(pm25, pm10);
+
+  snprintf(buf,
+	   buf_len,
+	   "{ \"aqi\": %u, \"condition\": %s, \"condition_index\": %d }",
+	   aqi_value, aqi_condition_name(aqi_value), aqi_index(aqi_value));
+
+#ifdef VERBOSE
+  Serial.println(buf);
+#endif
+
+  return true;
+}
+
 
 static boolean furball_light_update(char* buf, size_t buf_len) {
   if(!tsl2561.is_present())
@@ -221,6 +250,9 @@ void furball_loop() {
 
   if(furball_air_quality_update(buffer, BUFFER_LENGTH))
     homebus_publish_to("org.homebus.experimental.air-quality-sensor", buffer);
+
+  if(furball_aqi_update(buffer, BUFFER_LENGTH))
+    homebus_publish_to("org.homebus.experimental.aqi-pm25", buffer);
 
   if(furball_light_update(buffer, BUFFER_LENGTH))
     homebus_publish_to("org.homebus.experimental.light-sensor", buffer);

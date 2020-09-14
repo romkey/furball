@@ -177,9 +177,12 @@ static void display_screen_all_on() {
 }
 
 static void display_screen_aqi() {
+  unsigned aqi_value = aqi(pms5003.density_2_5(), pms5003.density_10_0());
+
   display.setCursor(10, 20);
-  display.print(aqi(pms5003.density_2_5(), pms5003.density_10_0()));
+  display.print(aqi_value);
   display.drawStr(10, 40, "AQI");
+  display.drawStr(0, 60, aqi_condition_name(aqi_value));
 }
  
 // these MUST be in the same sequence as the enum screen_type_t

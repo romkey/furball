@@ -1,5 +1,7 @@
 // Thanks to nyx for the AQI code
 
+#include <Arduino.h>
+
 #include <math.h> //for round()
 
 #include "aqi.h"
@@ -7,6 +9,8 @@
 static const float pm25_cuts[7] = {12, 35.4, 55.4, 150.4, 250.4, 350.4, 500.4};
 static const float pm10_cuts[7] = {54, 154, 254, 354, 424, 504, 604};
 static const float aqi_cuts[7] = {50, 100, 150, 200, 300, 400, 500};
+
+static const char *conditions[] = { "Good", "Moderate", "Unhealthy for Sensitive Groups", "Unhealthy", "Very Unhealthy", "Hazardous", "Beyond Index" };
 
 unsigned aqi25(float pm25_conc){
 	unsigned i = 0;
@@ -46,4 +50,26 @@ unsigned aqi(float pm25_conc, float pm10_conc){
 	float aqi25_val = aqi25(pm25_conc);
 	float aqi10_val = aqi10(pm10_conc);
 	return aqi25_val > aqi10_val ? aqi25_val : aqi10_val;
+}
+
+uint8_t aqi_index(unsigned aqi) {
+  uint8_t i = 0;
+
+  while(i < 7) {
+    if(aqi < aqi_cuts[i])
+      return i + 1;
+
+    i++;
+  }
+
+  return 7;
+}
+
+const char *aqi_condition_name(unsigned aqi) {
+  uint8_t index = aqi_index(aqi) - 1; // zero-based
+
+  if(index < sizeof(conditions)/sizeof(char *))
+    return conditions[index];
+
+  return "undefined";
 }

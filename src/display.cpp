@@ -2,7 +2,7 @@
 
 #include <multiball/wifi.h>
 
-#include <u8g2lib.h>
+#include <U8g2lib.h>
 
 #include "furball.h"
 #include "display.h"

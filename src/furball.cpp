@@ -36,24 +36,34 @@ static SoundLevel_Sensor sound_level(SOUND_PIN, UPDATE_DELAY, 0, 0, false);
 
 void furball_setup() {
   bme680.begin();
-  Serial.println("[bme680]");
+  if(bme680.is_present())
+    Serial.println("[bme680]");
+  else
+    Serial.println("BME68 not found");
 
   tsl2561.begin();
-  Serial.println("[tsl2561]");
+  if(tsl2561.is_present())
+    Serial.println("[tsl2561]");
+  else
+    Serial.println("TSL2561 not found");
 
+  // really need to rewrite to detect the presence of the PMS5003
   pms5003.begin(Serial1);
   Serial.println("[pms5003]");
 
+  // we're not using these in the air quality monitor
+#if 0
   pir.begin();
   Serial.println("[pir]");
 
   sound_level.begin();
   Serial.println("[sound intensity]");
+#endif
 
   if(display_begin())
     Serial.println("[display]");
   else
-    Serial.println("no display!");
+    Serial.println("Dsplay not found");
 }
 
 static boolean furball_air_update(char* buf, size_t buf_len) {

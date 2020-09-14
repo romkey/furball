@@ -59,8 +59,8 @@ The available screen types are listed in `src/display.h`. They include:
 -  `DISPLAY_SCREEN_PRESSURE` - shows the current air pressure
 -  `DISPLAY_SCREEN_VOC` - shows the current gas resistance reading from the BME680
 -  `DISPLAY_SCREEN_PM1` - shows the current PM1 density from the PMS5003
--  `DISPLAY_SCREEN_PM2_5 ` - shows the current PM1 density from the PMS5003
--  `DISPLAY_SCREEN_PM10 ` - shows the current PM1 density from the PMS5003
+-  `DISPLAY_SCREEN_PM2_5 ` - shows the current PM2.5 density from the PMS5003
+-  `DISPLAY_SCREEN_PM10 ` - shows the current PM10 density from the PMS5003
 -  `DISPLAY_SCREEN_LUX` - shows the current light intensity in lux
 -  `DISPLAY_SCREEN_INFRARED` - shows the current infrared light intensity
 -  `DISPLAY_SCREEN_IP` - shows the current IP address

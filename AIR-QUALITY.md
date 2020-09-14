@@ -93,3 +93,9 @@ If you want to show a blank screen for 5 seconds and all three particle densitie
 ```
 
 Internally the firmware uses the [u8g2 graphics library](https://github.com/olikraus/u8g2) to manage and draw on the OLED display.
+
+
+
+## Thanks
+
+Thanks to nyx for the AQI code.

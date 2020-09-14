@@ -6,6 +6,7 @@
 
 #include "furball.h"
 #include "display.h"
+#include "aqi.h"
 
 #include "config.h"
 
@@ -137,7 +138,7 @@ static void display_screen_all_air() {
 static void display_screen_all_air_f() {
   char buf[12];
 
-  snprintf(buf, 12, "C  %d", (int)(bme680.temperature()*9.0/5 + 32));
+  snprintf(buf, 12, "F  %d", (int)(bme680.temperature()*9.0/5 + 32));
   display.drawStr(0, 15, buf);
   snprintf(buf, 12, "mg %d", (int)bme680.pressure());
   display.drawStr(0, 40, buf);
@@ -174,6 +175,12 @@ static void display_screen_all_on() {
   display.setDrawColor(1);
   display.drawBox(0, 0, 127, 63);
 }
+
+static void display_screen_aqi() {
+  display.setCursor(10, 20);
+  display.print(aqi(pms5003.density_2_5(), pms5003.density_10_0()));
+  display.drawStr(10, 40, "AQI");
+}
  
 // these MUST be in the same sequence as the enum screen_type_t
 // you must not skip any
@@ -196,7 +203,8 @@ static void (*screen_handlers[])() = {
   display_screen_all_light,
   display_screen_all_particle,
   display_screen_all_off,
-  display_screen_all_on
+  display_screen_all_on,
+  display_screen_aqi
 };
 
 void display_loop() {

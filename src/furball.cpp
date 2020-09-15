@@ -134,7 +134,7 @@ static boolean furball_aqi_update(char* buf, size_t buf_len) {
 
   snprintf(buf,
 	   buf_len,
-	   "{ \"aqi\": %u, \"condition\": %s, \"condition_index\": %d }",
+	   "{ \"aqi\": %u, \"condition\": \"%s\", \"condition_index\": %d }",
 	   aqi_value, aqi_condition_name(aqi_value), aqi_index(aqi_value));
 
 #ifdef VERBOSE

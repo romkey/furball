@@ -184,7 +184,14 @@ static void display_screen_aqi() {
   display.drawStr(10, 40, "AQI");
   display.drawStr(0, 60, aqi_condition_name(aqi_value));
 }
- 
+
+static void display_screen_poop() {
+  extern const uint8_t poop_bits[];
+
+  display.drawXBM(0, 0, 128, 64, poop_bits);
+}
+
+
 // these MUST be in the same sequence as the enum screen_type_t
 // you must not skip any
 static void (*screen_handlers[])() = {
@@ -207,7 +214,8 @@ static void (*screen_handlers[])() = {
   display_screen_all_particle,
   display_screen_all_off,
   display_screen_all_on,
-  display_screen_aqi
+  display_screen_aqi,
+  display_screen_poop
 };
 
 void display_loop() {

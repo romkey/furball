@@ -239,8 +239,11 @@ void furball_loop() {
   bme680.handle();
   tsl2561.handle();
   pms5003.handle();
+
+#if 0
   sound_level.handle();
   pir.handle();
+#endif
 
   #define BUFFER_LENGTH 700
   char buffer[BUFFER_LENGTH + 1];
@@ -257,11 +260,13 @@ void furball_loop() {
   if(furball_light_update(buffer, BUFFER_LENGTH))
     homebus_publish_to("org.homebus.experimental.light-sensor", buffer);
 
+#if 0
   if(furball_sound_update(buffer, BUFFER_LENGTH))
     homebus_publish_to("org.homebus.experimental.sound-sensor", buffer);
 
   if(furball_presence_update(buffer, BUFFER_LENGTH))
     homebus_publish_to("org.homebus.experimental.presence-sensor", buffer);
+#endif
 
   if(furball_system_update(buffer, BUFFER_LENGTH))
     homebus_publish_to("org.homebus.experimental.system", buffer);

@@ -70,7 +70,8 @@ The available screen types are listed in `src/display.h`. They include:
 -  `DISPLAY_SCREEN_ALL_PARTICLE` - shows PM1, PM2.5 and PM10 concentrations on one screen
 -  `DISPLAY_SCREEN_ALL_OFF` - shows a blank, dark screen
 -  `DISPLAY_SCREEN_ALL_ON` - shows a fully lit screen 
--  `DISPLAY_SCREEN_AQI` - shows a the current, instantaneous AQI as well as condition name
+-  `DISPLAY_SCREEN_AQI` - shows a the current, instantaneous AQI as well as condition name 
+-  `DISPLAY_SCREEN_POOP` - shows the poop emoji
 
 For example, if you want to cycle every 10 seconds between a screen that says "Hello World", one that shows the time and one that shows the temperature, you'd use these lines:
 ```

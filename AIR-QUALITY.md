@@ -71,7 +71,10 @@ The available screen types are listed in `src/display.h`. They include:
 -  `DISPLAY_SCREEN_ALL_OFF` - shows a blank, dark screen
 -  `DISPLAY_SCREEN_ALL_ON` - shows a fully lit screen 
 -  `DISPLAY_SCREEN_AQI` - shows a the current, instantaneous AQI as well as condition name 
--  `DISPLAY_SCREEN_POOP` - shows the poop emoji
+-  `DISPLAY_SCREEN_POOP` - shows the poop emoji 
+-  `DISPLAY_SCREEN_USER_BITMAP1` - shows user-defined bitmap 1 
+-  `DISPLAY_SCREEN_USER_BITMAP2` - shows user-defined bitmap 2
+-  `DISPLAY_SCREEN_USER_BITMAP3` - shows user-defined bitmap 3 
 
 For example, if you want to cycle every 10 seconds between a screen that says "Hello World", one that shows the time and one that shows the temperature, you'd use these lines:
 ```
@@ -96,7 +99,28 @@ If you want to show a blank screen for 5 seconds and all three particle densitie
 
 Internally the firmware uses the [u8g2 graphics library](https://github.com/olikraus/u8g2) to manage and draw on the OLED display.
 
+## Providing a Bitmap
 
+The three user bitmaps have default definitions in `src/user_bitmap.cpp` in XBM format, which encodes them as an array of bytes in C. You can override these in `src/config.h` by defining the constants `DISPLAY_SCREEN_USER_BITMAP1`, `DISPLAY_SCREEN_USER_BITMAP2` and `DISPLAY_SCREEN_USER_BITMAP3`, like so:
+```
+#define DISPLAY_SCREEN_USER_BITMAP1_OVERRIDE   0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x22, 0xFF, 0xFF, 0xFF, \
+  0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, \
+  0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, \
+  0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFC, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, \
+  0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x07, 0xF0, 0xFF, 0xFF, \
+  0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, \
+  0x3F, 0xE0, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, \
+  ...
+```
+be sure to include all the hex numbers for the bitmap. Don't end the final line with a `\`.
+
+Overriding the definitions allows you to customize them without modifying any files that are checked into the repository.
+
+Bitmap images must be 128x64, monochrome. You can easily convert other file formats using [ImageMagick's](https://www.imagemagick.org/) `convert` program:
+```
+convert poop-emoji.jpg user_bitmap.xmb
+```
+Copy and paste just the contents of the array to the constant in `src/config.h`.
 
 ## Thanks
 

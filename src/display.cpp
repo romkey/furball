@@ -25,7 +25,8 @@ boolean display_begin() {
 
   display.clearDisplay();
   display.drawBox(0, 10, 0, 10);
-  display.setFont(u8g2_font_ncenB14_tr);
+  //  display.setFont(u8g2_font_ncenB14_tr);
+  display.setFont(u8g2_font_VCR_OSD_mf);
   display.sendBuffer();
 
   return true;
@@ -149,7 +150,7 @@ static void display_screen_all_air_f() {
 static void display_screen_all_light() {
   char buf[12];
 
-  snprintf(buf, 12, "lx  %d", tsl2561.lux());
+  snprintf(buf, 12, "lx %d", tsl2561.lux());
   display.drawStr(0, 15, buf);
   snprintf(buf, 12, "ir %d", tsl2561.ir());
   display.drawStr(0, 40, buf);
@@ -158,7 +159,7 @@ static void display_screen_all_light() {
 static void display_screen_all_particle() {
   char buf[12];
 
-  snprintf(buf, 12, "1    %d", pms5003.density_1_0());
+  snprintf(buf, 12, "1   %d", pms5003.density_1_0());
   display.drawStr(0, 15, buf);
   snprintf(buf, 12, "2.5 %d", pms5003.density_2_5());
   display.drawStr(0, 40, buf);
@@ -179,9 +180,9 @@ static void display_screen_all_on() {
 static void display_screen_aqi() {
   unsigned aqi_value = aqi(pms5003.density_2_5(), pms5003.density_10_0());
 
-  display.setCursor(10, 20);
+  display.setCursor(0, 20);
   display.print(aqi_value);
-  display.drawStr(10, 40, "AQI");
+  display.drawStr(0, 40, "AQI");
   display.drawStr(0, 60, aqi_condition_name(aqi_value));
 }
 
@@ -189,6 +190,24 @@ static void display_screen_poop() {
   extern const uint8_t poop_bits[];
 
   display.drawXBM(0, 0, 128, 64, poop_bits);
+}
+
+static void display_screen_user_bitmap1() {
+  extern const uint8_t user_bitmap1_bits[];
+
+  display.drawXBM(0, 0, 128, 64, user_bitmap1_bits);
+}
+
+static void display_screen_user_bitmap2() {
+  extern const uint8_t user_bitmap2_bits[];
+
+  display.drawXBM(0, 0, 128, 64, user_bitmap2_bits);
+}
+
+static void display_screen_user_bitmap3() {
+  extern const uint8_t user_bitmap3_bits[];
+
+  display.drawXBM(0, 0, 128, 64, user_bitmap3_bits);
 }
 
 
@@ -215,7 +234,10 @@ static void (*screen_handlers[])() = {
   display_screen_all_off,
   display_screen_all_on,
   display_screen_aqi,
-  display_screen_poop
+  display_screen_poop,
+  display_screen_user_bitmap1,
+  display_screen_user_bitmap2,
+  display_screen_user_bitmap3
 };
 
 void display_loop() {
@@ -229,7 +251,8 @@ void display_loop() {
   }
 
   display.clearBuffer();
-  display.setFont(u8g2_font_ncenB14_tr);
+  //  display.setFont(u8g2_font_ncenB14_tr);
+  display.setFont(u8g2_font_VCR_OSD_mf);
   display.setFontMode(0); // not transparent
   display.setDrawColor(1);
 

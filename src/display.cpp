@@ -208,6 +208,13 @@ static void display_screen_user_bitmap3() {
   extern const uint8_t user_bitmap3_bits[];
 
   display.drawXBM(0, 0, 128, 64, user_bitmap3_bits);
+
+}
+
+static void display_screen_rbg() {
+  extern const uint8_t rbg_bits[];
+
+  display.drawXBM(0, 0, 128, 64, rbg_bits);
 }
 
 
@@ -237,7 +244,8 @@ static void (*screen_handlers[])() = {
   display_screen_poop,
   display_screen_user_bitmap1,
   display_screen_user_bitmap2,
-  display_screen_user_bitmap3
+  display_screen_user_bitmap3,
+  display_screen_rbg,
 };
 
 void display_loop() {

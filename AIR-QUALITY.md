@@ -75,6 +75,7 @@ The available screen types are listed in `src/display.h`. They include:
 -  `DISPLAY_SCREEN_USER_BITMAP1` - shows user-defined bitmap 1 
 -  `DISPLAY_SCREEN_USER_BITMAP2` - shows user-defined bitmap 2
 -  `DISPLAY_SCREEN_USER_BITMAP3` - shows user-defined bitmap 3 
+- `DISPLAY_SCREEN_RBG` - RBG
 
 For example, if you want to cycle every 10 seconds between a screen that says "Hello World", one that shows the time and one that shows the temperature, you'd use these lines:
 ```

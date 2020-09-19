@@ -17,3 +17,5 @@ before_script:
 
 script:
     - platformio run
+    - cp .travis.config-mqtt.h src/config.h
+    - platformio run

@@ -35,11 +35,15 @@ void setup() {
   Serial.println("[app]");
 
 #ifdef MQTT_HOST
-  Serial.println("[credentials]");
+  Serial.println("[mqtt credentials]");
   homebus_stuff(MQTT_HOST, MQTT_PORT, MQTT_USER, MQTT_PASS, MQTT_UUID);
+#ifdef MQTT_OVERRIDE_TOPIC_PREFIX
+  homebus_mqtt_override_prefix(MQTT_OVERRIDE_TOPIC_PREFIX);
+#endif
 #endif
 
   Serial.println("[homebus]");
+  // this is... wrong - needs to be sorted for proper Homebus use
   homebus_configure("Furball", "CTRLH Electronics Lab", "Homebus", "v4");
   homebus_setup();
 

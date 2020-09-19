@@ -161,7 +161,8 @@ static boolean furball_light_update(char* buf, size_t buf_len) {
   return true;
 }
 
-
+// the sound and presence sensors are currently unused in the furball air quality monitor
+#if 0
 static boolean furball_sound_update(char* buf, size_t buf_len) {
   snprintf(buf,
 	   buf_len,
@@ -189,6 +190,7 @@ static boolean furball_presence_update(char* buf, size_t buf_len) {
 
   return true;
 }
+#endif
 
 /*
  * we do this once at startup, and not again unless our IP address changes
@@ -248,31 +250,63 @@ void furball_loop() {
   #define BUFFER_LENGTH 700
   char buffer[BUFFER_LENGTH + 1];
 
-  if(furball_air_update(buffer, BUFFER_LENGTH))
+  if(furball_air_update(buffer, BUFFER_LENGTH)) {
+#ifdef MQTT_OVERRIDE_TOPIC_AIR_SENSOR
     homebus_publish_to("org.homebus.experimental.air-sensor", buffer);
+#else
+    homebus_publish_to("org.homebus.experimental.air-sensor", buffer);
+#endif
+  }
 
-  if(furball_air_quality_update(buffer, BUFFER_LENGTH))
+  if(furball_air_quality_update(buffer, BUFFER_LENGTH)) {
+#ifdef MQTT_OVERRIDE_TOPIC_AIR_SENSOR
     homebus_publish_to("org.homebus.experimental.air-quality-sensor", buffer);
+#else
+    homebus_publish_to("org.homebus.experimental.air-quality-sensor", buffer);
+#endif
+  }
 
-  if(furball_aqi_update(buffer, BUFFER_LENGTH))
+  if(furball_aqi_update(buffer, BUFFER_LENGTH)) {
+#ifdef MQTT_OVERRIDE_TOPIC_AIR_SENSOR
     homebus_publish_to("org.homebus.experimental.aqi-pm25", buffer);
+#else
+    homebus_publish_to("org.homebus.experimental.aqi-pm25", buffer);
+#endif
+  }
 
-  if(furball_light_update(buffer, BUFFER_LENGTH))
+  if(furball_light_update(buffer, BUFFER_LENGTH)) {
+#ifdef MQTT_OVERRIDE_TOPIC_AIR_SENSOR
     homebus_publish_to("org.homebus.experimental.light-sensor", buffer);
+#else
+    homebus_publish_to("org.homebus.experimental.light-sensor", buffer);
+#endif
+  }
 
 #if 0
-  if(furball_sound_update(buffer, BUFFER_LENGTH))
+  if(furball_sound_update(buffer, BUFFER_LENGTH)) {
     homebus_publish_to("org.homebus.experimental.sound-sensor", buffer);
+  }
 
-  if(furball_presence_update(buffer, BUFFER_LENGTH))
+  if(furball_presence_update(buffer, BUFFER_LENGTH)) {
     homebus_publish_to("org.homebus.experimental.presence-sensor", buffer);
+  }
 #endif
 
-  if(furball_system_update(buffer, BUFFER_LENGTH))
+  if(furball_system_update(buffer, BUFFER_LENGTH)) {
+#ifdef MQTT_OVERRIDE_TOPIC_AIR_SENSOR
     homebus_publish_to("org.homebus.experimental.system", buffer);
+#else
+    homebus_publish_to("org.homebus.experimental.system", buffer);
+#endif
+  }
 
-  if(furball_diagnostic_update(buffer, BUFFER_LENGTH))
+  if(furball_diagnostic_update(buffer, BUFFER_LENGTH)) {
+#ifdef MQTT_OVERRIDE_TOPIC_AIR_SENSOR
     homebus_publish_to("org.homebus.experimental.diagnostic", buffer);
+#else
+    homebus_publish_to("org.homebus.experimental.diagnostic", buffer);
+#endif
+  }
 }
 
 /* 
@@ -282,11 +316,13 @@ void furball_loop() {
 void furball_stream() {
   static uint8_t count = 0;
 
-  if(count == 0)
+  if(count == 0) {
     Serial.println("TEMP PRES HUMD TVOC   IR VISB FULL  LUX  1.0  2.5 10.0  SMAX  SMIN  SAVG  SCNT  PIR");
+  }
 
-  if(++count == 10)
+  if(++count == 10) {
     count = 0;
+  }
 
   bme680.handle();
   tsl2561.handle();

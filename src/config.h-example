@@ -30,6 +30,9 @@
 #define MQTT_OVERRIDE_TOPIC_DIAGNOSTIC	       "org.homebus.experimental.diagnostic"
 #define MQTT_OVERRIDE_TOPIC_AQI_SENSOR         "org.homebus.experimental.aqi-pm25"
 
+// just send bare MQTT messages, don't use the Homebus envelope for them
+#define HOMEBUS_NO_ENVELOPE
+
 
 // publish updates this many milliseconds
 #define UPDATE_DELAY 60*1000

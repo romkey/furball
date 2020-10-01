@@ -36,6 +36,7 @@ static PIR_Sensor pir(1, UPDATE_DELAY, 0, 0, false);
 static SoundLevel_Sensor sound_level(SOUND_PIN, UPDATE_DELAY, 0, 0, false);
 
 void furball_setup() {
+
   bme680.begin();
   if(bme680.is_present())
     Serial.println("[bme680]");
@@ -65,6 +66,48 @@ void furball_setup() {
     Serial.println("[display]");
   else
     Serial.println("Dsplay not found");
+
+#ifdef MQTT_HOST
+  Serial.println("[mqtt credentials]");
+  homebus_stuff(MQTT_HOST, MQTT_PORT, MQTT_USER, MQTT_PASS, MQTT_UUID);
+#ifdef MQTT_OVERRIDE_TOPIC_PREFIX
+  homebus_mqtt_override_prefix(MQTT_OVERRIDE_TOPIC_PREFIX);
+#endif
+#endif
+
+#ifdef HOMEBUS_NO_ENVELOPE
+  homebus_use_envelope(false);
+#endif
+
+  homebus_set_provisioner(HOMEBUS_SERVER, HOMEBUS_AUTHENTICATION_TOKEN);
+
+  static const char *ro_ddcs[] = {
+		      DDC_AIR_SENSOR,
+		      DDC_AIR_QUALITY_SENSOR,
+		      DDC_LIGHT_SENSOR,
+		      DDC_SYSTEM,
+		      DDC_DIAGNOSTIC,
+		      DDC_AQI_SENSOR,
+		      NULL
+  };
+  static const char *wo_ddcs[] = { NULL };
+  static char mac_address[3*6];
+
+  Serial.print("setup mac address is ");
+  Serial.println(App.mac_address());
+  Serial.println(App.mac_address().c_str());
+  strncpy(mac_address, App.mac_address().c_str(), 3*6);
+
+  // this is... wrong - needs to be sorted for proper Homebus use
+  homebus_configure("Homebus",
+		    "Furball Air Quality Monitor",
+		    mac_address,
+		    "",
+		    ro_ddcs,
+		    wo_ddcs);
+
+  homebus_setup();
+  Serial.println("[homebus]");
 }
 
 static boolean furball_air_update(char* buf, size_t buf_len) {

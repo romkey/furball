@@ -67,6 +67,8 @@ void furball_setup() {
   else
     Serial.println("Dsplay not found");
 
+  //  homebus_reset();
+
 #ifdef MQTT_HOST
   Serial.println("[mqtt credentials]");
   homebus_stuff(MQTT_HOST, MQTT_PORT, MQTT_USER, MQTT_PASS, MQTT_UUID);
@@ -93,9 +95,6 @@ void furball_setup() {
   static const char *wo_ddcs[] = { NULL };
   static char mac_address[3*6];
 
-  Serial.print("setup mac address is ");
-  Serial.println(App.mac_address());
-  Serial.println(App.mac_address().c_str());
   strncpy(mac_address, App.mac_address().c_str(), 3*6);
 
   // this is... wrong - needs to be sorted for proper Homebus use

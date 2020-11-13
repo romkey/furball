@@ -19,6 +19,8 @@
 
 #include "furball.h"
 
+#define APP_NAME "furball"
+
 MultiballApp App;
 
 void setup() {
@@ -28,17 +30,19 @@ void setup() {
     { WIFI_SSID3, WIFI_PASSWORD3 }
   };
 
+  Serial.begin(115200);
+
   delay(500);
 
   App.wifi_credentials(3, wifi_credentials);
-  App.begin("furball");
+  App.begin(APP_NAME);
   Serial.println("[app]");
 
   furball_setup();
   Serial.println("[furball]");
 
 #ifdef USE_DIAGNOSTICS
-  diagnostics_setup();
+  diagnostics_setup(APP_NAME);
   Serial.println("[diagnostics]");
 #endif
 

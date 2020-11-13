@@ -36,7 +36,6 @@ static PIR_Sensor pir(1, UPDATE_DELAY, 0, 0, false);
 static SoundLevel_Sensor sound_level(SOUND_PIN, UPDATE_DELAY, 0, 0, false);
 
 void furball_setup() {
-
   bme680.begin();
   if(bme680.is_present())
     Serial.println("[bme680]");

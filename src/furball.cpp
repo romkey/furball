@@ -350,6 +350,9 @@ void furball_loop() {
   }
 }
 
+void homebus_mqtt_callback(const char *ddc, const char *payload) {
+}
+
 /* 
  * this callback is used to stream sensor data for diagnostics
  */
@@ -396,3 +399,4 @@ void furball_stream() {
   }
 }
 #endif
+

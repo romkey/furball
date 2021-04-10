@@ -7,6 +7,8 @@
 #define WIFI_SSID3     "YOUR WIFI SSID3"
 #define WIFI_PASSWORD3 "YOUR WIFI PASSWORD3"
 
+#if 0
+
 // if you don't predefine MQTT broker information
 // then  the system will use Homebus to provision itself
 
@@ -23,6 +25,7 @@
 // these are the defaults that furball.cpp publishes to - appended to MQTT_OVERRIDE_TOPIC_PREFIX
 // for instance
 // homebus/device/UUID_FOR_THIS_CLIENT/org.homebus.experimental.air-sensor
+
 #define MQTT_OVERRIDE_TOPIC_AIR_SENSOR         "org.homebus.experimental.air-sensor"
 #define MQTT_OVERRIDE_TOPIC_AIR_QUALITY_SENSOR "org.homebus.experimental.air-quality-sensor" 
 #define MQTT_OVERRIDE_TOPIC_LIGHT_SENSOR       "org.homebus.experimental.light-sensor"
@@ -33,6 +36,10 @@
 // just send bare MQTT messages, don't use the Homebus envelope for them
 #define HOMEBUS_NO_ENVELOPE
 
+#endif
+
+#define HOMEBUS_AUTHENTICATION_TOKEN "long string from homebus"
+#define HOMEBUS_SERVER "homebus.org"
 
 // publish updates this many milliseconds
 #define UPDATE_DELAY 60*1000

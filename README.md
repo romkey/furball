@@ -2,8 +2,7 @@
 
 _This is the README file for the regular Furball - for info on adapting it to an Air Quality Monitor please see [AIR-QUALITY.md](AIR-QUALITY.md).
 
-[![Build Status](https://travis-ci.com/romkey/furball-air-quality.svg?branch=master)](https://travis-ci.com/romkey/furball-air-quality)
-
+[![PlatformIO CI](https://github.com/romkey/furball-air-quality/actions/workflows/main.yml/badge.svg)](https://github.com/romkey/furball-air-quality/actions/workflows/main.yml)
 
 Furball is an open-source hardware project intended to help with the research and development of [Homebus](https://github.com/HomeBusProjects), an IoT auto-provisioning framework and data processing network built on top of MQTT. Note that Homebus is not even alpha quality software at this time and is still undergoing architectural changes and development.
 
